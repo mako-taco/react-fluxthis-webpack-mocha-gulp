@@ -2553,7 +2553,7 @@
 	
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (descriptor.value) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
@@ -2684,12 +2684,12 @@
 
 	'use strict';
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (descriptor.value) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 	
 	Object.defineProperty(exports, '__esModule', {
-		value: true
+	  value: true
 	});
 	/**
 	 * Licensed under the Apache License, Version 2.0 (the "License");
@@ -2719,44 +2719,42 @@
 	 */
 	
 	var ConstantCollection = function ConstantCollection() {
-		var _this = this;
+	  var _this = this;
 	
-		for (var _len = arguments.length, names = Array(_len), _key = 0; _key < _len; _key++) {
-			names[_key] = arguments[_key];
-		}
+	  for (var _len = arguments.length, names = Array(_len), _key = 0; _key < _len; _key++) {
+	    names[_key] = arguments[_key];
+	  }
 	
-		_classCallCheck(this, ConstantCollection);
+	  _classCallCheck(this, ConstantCollection);
 	
-		this.id = Math.random().toString(36).substring(2);
-		names.forEach(function (name) {
-			invariant(_this[name] === undefined, 'The constant `%s` already exists in this collection', name);
+	  this.id = Math.random().toString(36).substring(2);
+	  names.forEach(function (name) {
+	    invariant(_this[name] === undefined, 'The constant `%s` already exists in this collection', name);
 	
-			_this[name] = new Constant(name, _this);
-		});
+	    _this[name] = new Constant(name, _this);
+	  });
 	
-		if (Object.freeze instanceof Function) {
-			Object.freeze(this);
-		}
+	  Object.freeze(this);
 	};
 	
 	exports['default'] = ConstantCollection;
 	
 	var Constant = (function () {
-		function Constant(name, collection) {
-			_classCallCheck(this, Constant);
+	  function Constant(name, collection) {
+	    _classCallCheck(this, Constant);
 	
-			this.name = name;
-			this.collection = collection;
-		}
+	    this.name = name;
+	    this.collection = collection;
+	  }
 	
-		_createClass(Constant, [{
-			key: 'toString',
-			value: function toString() {
-				return '' + this.name + '_#' + this.collection.id;
-			}
-		}]);
+	  _createClass(Constant, [{
+	    key: 'toString',
+	    value: function toString() {
+	      return '' + this.name + '_#' + this.collection.id;
+	    }
+	  }]);
 	
-		return Constant;
+	  return Constant;
 	})();
 
 	module.exports = exports['default'];
@@ -3756,7 +3754,7 @@
 	
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (descriptor.value) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	var _get = function get(object, property, receiver) { var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 	
@@ -9133,7 +9131,7 @@
 	
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (descriptor.value) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, '__esModule', {
 		value: true
@@ -9279,7 +9277,7 @@
 	
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (descriptor.value) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, '__esModule', {
 		value: true
@@ -9574,7 +9572,7 @@
 	
 	var _classCallCheck = function (instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if (descriptor.value) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
 	Object.defineProperty(exports, '__esModule', {
 		value: true
@@ -9747,13 +9745,13 @@
 				// to see if the object has changed. The check is not very efficient,
 				// but will at least throw errors when things change, like freeze would
 				// do for us in strict mode
-				var serializedAction = undefined;
+				var serializedPayload = undefined;
 	
 				if (process.env.NODE_ENV !== 'production') {
 					try {
-						serializedAction = JSON.stringify(action);
+						serializedPayload = JSON.stringify(action.payload);
 					} catch (err) {
-						invariant(!err, 'Actions must be simple objects, and must be stringifyable.');
+						invariant(!err, 'Payloads must be simple objects, and must be stringifyable.');
 					}
 				}
 	
@@ -9777,7 +9775,7 @@
 	
 					//check for mutations
 					if (process.env.NODE_ENV !== 'production') {
-						invariant(JSON.stringify(action) === serializedAction, 'An action dispatched by the FluxThis dispatcher was\n\t\t\t\t\tmutated. This is bad. Please check the handlers for\n\t\t\t\t\t%s %s.', source, type);
+						invariant(JSON.stringify(action.payload) === serializedPayload, 'An action dispatched by the FluxThis dispatcher was\n\t\t\t\t\tmutated. This is bad. Please check the handlers for\n\t\t\t\t\t%s %s.', source, type);
 					}
 				}
 			}
