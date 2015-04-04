@@ -17,10 +17,17 @@ describe('color store', () => {
 	});
 
 	it('should remove colors', () => {
-
+		ColorStore.getColors().toJS().should.containEql('red');
+		
+		ColorStore.TestUtils.mockDispatch({
+			type: ACTION_TYPES.REMOVE_COLOR,
+			payload: 'red'
+		});
+ 
+		ColorStore.getColors().toJS().should.not.containEql('red');
 	});
 
 	it('should return a list of colors', () => {
-
-	})
+		ColorStore.getColors().toJS().should.eql(['red','green','blue']);
+	});
 });

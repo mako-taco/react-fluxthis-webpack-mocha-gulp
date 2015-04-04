@@ -137,6 +137,7 @@ gulp.task('prod', function (callback) {
 	
 	config.forEach(function (config) {
 		config.optimize = true;
+		config.output.filename = '[filename].min.js'
 	});
 
 	webpackRun(config)

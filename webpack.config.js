@@ -9,6 +9,10 @@ var loaders = [
 	{
 		test: /\.es6\.js$/,
 		loader: 'babel-loader'
+	},
+	{
+		test: /\.css$/,
+		loader: 'style-loader!css-loader'
 	}
 ];
 var extensions = [
