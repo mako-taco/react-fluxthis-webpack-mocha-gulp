@@ -1,0 +1,50 @@
+{
+  "name": "react-fluxthis-webpack-mocha-gulp",
+  "version": "1.0.0",
+  "description": "Bare bones project template featuing FluxThis, Webpack, Mocha, and React.",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mako-taco/react-fluxthis-webpack-mocha-gulp.git"
+  },
+  "keywords": [
+    "react",
+    "fluxthis",
+    "flux",
+    "webpack",
+    "gulp",
+    "mocha"
+  ],
+  "author": "Jake Scott",
+  "license": "ALv2.0",
+  "bugs": {
+    "url": "https://github.com/mako-taco/react-fluxthis-webpack-mocha-gulp/issues"
+  },
+  "homepage": "https://github.com/mako-taco/react-fluxthis-webpack-mocha-gulp",
+  "devDependencies": {
+    "babel-loader": "^5.0.0",
+    "console-polyfill": "^0.2.1",
+    "express": "^4.12.3",
+    "gulp": "^3.8.11",
+    "gulp-express": "^0.3.5",
+    "mocha-phantomjs": "^3.5.3",
+    "phantomjs": "^1.9.16",
+    "phantomjs-polyfill": "0.0.1",
+    "should": "^5.2.0",
+    "source-map-support": "^0.2.10",
+    "watch": "^0.14.0"
+  },
+  "dependencies": {
+    "babel-core": "^5.0.7",
+    "fluxthis": "^1.1.1",
+    "gulp-util": "^3.0.4",
+    "jsx-loader": "^0.13.1",
+    "node-notifier": "^4.1.2",
+    "react": "^0.13.1",
+    "webpack": "^1.7.3",
+    "when": "^3.7.2"
+  }
+}
