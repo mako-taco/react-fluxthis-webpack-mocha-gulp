@@ -149,8 +149,11 @@ gulp.task('prod', function (callback) {
 });
 
 gulp.task('watch', function (callback) {
+	var buildID = 0;
+	var lastTestedBuild = 0;
 	var compiler;
 	var testCompiler;
+	var testWatcher;
 
 	process.env.NODE_ENV = 'development';
 
@@ -159,6 +162,7 @@ gulp.task('watch', function (callback) {
 		config.debug = true;
 	});
 	
+	// Watch the main files and test files separately
 	compiler = webpack(config[0]);
 	testCompiler = webpack(config[1]);
 
@@ -184,13 +188,19 @@ gulp.task('watch', function (callback) {
 					notifyBuildFailed();
 				}
 				else {
+					buildID++;
+					testWatcher.invalidate();
 					notifyBuildPassed();
 				}
 			}
 		});
 
-		testCompiler.watch(200, function (err, stats) {
-			if(err) {
+		testWatcher = testCompiler.watch(200, function (err, stats) {
+			// Exit early when the main files failed to build; no reason to test
+			if(buildID === lastTestedBuild) {
+				return;
+			}
+			else if(err) {
 				notifyTestBuildFailed();
 			}
 			else {
@@ -210,7 +220,10 @@ gulp.task('watch', function (callback) {
 					notifyTestBuildFailed();
 				}
 				else {
-					runTests().done(notifyTestsPassed, notifyTestsFailed);
+					runTests().done(notifyTestsPassed, function () {
+						lastTestedBuild = buildID;
+						notifyTestsFailed();
+					});
 				}
 			}
 		});
