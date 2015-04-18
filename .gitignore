@@ -26,3 +26,8 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# built files
+dist
+test/fixtures/test.js
+test/fixtures/test.js.map

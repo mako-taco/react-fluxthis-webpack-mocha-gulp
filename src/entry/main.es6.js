@@ -2,7 +2,7 @@
 
 require('babel-core/lib/babel/polyfill');
 
-let Main = require('components/Main');
+let MyFirstComponent = require('components/MyFirstComponent');
 let React = require('react');
 
-React.render(React.createElement(Main, {}), document.getElementById('main'));
+React.render(React.createElement(MyFirstComponent, {}), document.getElementById('main'));
