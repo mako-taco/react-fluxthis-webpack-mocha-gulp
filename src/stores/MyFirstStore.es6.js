@@ -5,7 +5,7 @@ const ACTION_TYPES = require('constants/ActionTypes');
 const Immutable = ImmutableStore.Immutable;
 
 export default new ImmutableStore({
-	displayName: 'ColorStore',
+	displayName: 'MyFirstStore',
 	init () {
 		/* Your code here! */
 	},
