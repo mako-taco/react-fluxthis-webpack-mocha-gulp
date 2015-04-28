@@ -41,7 +41,7 @@ function notifyTestsFailed (err) {
 		icon: __dirname + '/test/notifications/bad.png'
 	};
 
-	if(err.url) {
+	if(err && err.url) {
 		notification.message = 'Click to view in browser';
 		notification.open = err.url;
 	}
