@@ -28,6 +28,6 @@ node_modules
 .lock-wscript
 
 # built files
-dist
+dist/*
 test/fixtures/test.js
 test/fixtures/test.js.map

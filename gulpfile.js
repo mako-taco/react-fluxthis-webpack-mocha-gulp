@@ -71,7 +71,7 @@ process.env.NODE_PORT = process.env.NODE_PORT || 21113;
 
 runTests = nodefn.lift(function (callback) {
 	var url = 'http://localhost:' + process.env.NODE_PORT + '/index.html';
-	var file = path.join('node_modules','.bin','mocha-phantomjs.cmd');
+	var file = path.join('node_modules','.bin','mocha-phantomjs');
 	var args = ['-R', 'spec', url];
 	
 	gutil.log('Starting unit tests');
@@ -80,8 +80,18 @@ runTests = nodefn.lift(function (callback) {
 		execFile(file, args, function (err, stdout, stderr) {
 			var code = (err && err.code) || 0; 
 			
-			gutil.log(stdout);
-			gutil.log(stderr);
+			if(err) {
+				gutil.log(err.stack);
+			}
+
+			if(stdout) {
+				gutil.log(stdout);
+			}
+
+			if(stderr) {
+				gutil.log(stderr);
+			}
+
 			gutil.log('Mocha exited with code ' + code);
 			
 			//non zero! bad!
