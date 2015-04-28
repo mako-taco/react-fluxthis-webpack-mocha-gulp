@@ -73,13 +73,13 @@ runTests = nodefn.lift(function (callback) {
 	var url = 'http://localhost:' + process.env.NODE_PORT + '/index.html';
 	var file = path.join('node_modules','.bin','mocha-phantomjs');
 	var args = ['-R', 'spec', url];
-	
+
 	gutil.log('Starting unit tests');
 	try {
 
 		execFile(file, args, function (err, stdout, stderr) {
-			var code = (err && err.code) || 0; 
-			
+			var code = (err && err.code) || 0;
+
 			if(err) {
 				gutil.log(err.stack);
 			}
@@ -93,7 +93,7 @@ runTests = nodefn.lift(function (callback) {
 			}
 
 			gutil.log('Mocha exited with code ' + code);
-			
+
 			//non zero! bad!
 			if(code) {
 				err = new Error('Client tests failed');
@@ -124,7 +124,7 @@ webpackRun = nodefn.lift(nodefn.lift(webpack));
 
 gulp.task('dev', function (callback) {
 	process.env.NODE_ENV = 'development';
-	
+
 	config.forEach(function (config) {
 		config.devtool = 'source-map';
 		config.debug = true;
@@ -133,14 +133,14 @@ gulp.task('dev', function (callback) {
 	webpackRun(config)
 		.then(startTestServer(), notifyBuildFailed)
 		.then(runTests())
-		.then(notifyTestsPassed, notifyTestsFailed)		
+		.then(notifyTestsPassed, notifyTestsFailed)
 		.ensure(stopTestServer())
 		.done(callback);
 });
 
 gulp.task('prod', function (callback) {
 	process.env.NODE_ENV = 'production';
-	
+
 	config.forEach(function (config) {
 		config.optimize = true;
 		config.output.filename = '[filename].min.js'
@@ -149,14 +149,14 @@ gulp.task('prod', function (callback) {
 	webpackRun(config)
 		.then(startTestServer(), notifyBuildFailed)
 		.then(runTests())
-		.then(notifyTestsPassed, notifyTestsFailed)		
+		.then(notifyTestsPassed, notifyTestsFailed)
 		.ensure(stopTestServer())
 		.done(callback);
 });
 
 gulp.task('watch', function (callback) {
 	var buildID = 0;
-	var lastTestedBuild = 0;
+	var testsRunning = false;
 	var compiler;
 	var testCompiler;
 	var testWatcher;
@@ -167,7 +167,7 @@ gulp.task('watch', function (callback) {
 		config.devtool = 'source-map';
 		config.debug = true;
 	});
-	
+
 	// Watch the main files and test files separately
 	compiler = webpack(config[0]);
 	testCompiler = webpack(config[1]);
@@ -178,8 +178,8 @@ gulp.task('watch', function (callback) {
 				notifyBuildFailed(err);
 			}
 			else {
-				var jsonStats = stats.toJson();	
-				
+				var jsonStats = stats.toJson();
+
 				if(jsonStats.warnings.length > 0) {
 					jsonStats.warnings.forEach(function (warning) {
 						gutil.log(gutil.colors.yellow('WARN: ') + warning);
@@ -203,15 +203,15 @@ gulp.task('watch', function (callback) {
 
 		testWatcher = testCompiler.watch(200, function (err, stats) {
 			// Exit early when the main files failed to build; no reason to test
-			if(buildID === lastTestedBuild) {
+			if(testsRunning) {
 				return;
 			}
 			else if(err) {
 				notifyTestBuildFailed();
 			}
 			else {
-				var jsonStats = stats.toJson();	
-					
+				var jsonStats = stats.toJson();
+
 				if(jsonStats.warnings.length > 0) {
 					jsonStats.warnings.forEach(function (warning) {
 						gutil.log(gutil.colors.yellow('WARN: ' + warning));
@@ -226,9 +226,14 @@ gulp.task('watch', function (callback) {
 					notifyTestBuildFailed();
 				}
 				else {
-					runTests().done(notifyTestsPassed, function () {
-						lastTestedBuild = buildID;
-						notifyTestsFailed();
+					testsRunning = true;
+
+					runTests().ensure(function () {
+						testsRunning = false;
+					}).done(function () {
+						notifyTestsPassed();
+					}, function (err) {
+						notifyTestsFailed(err);
 					});
 				}
 			}
