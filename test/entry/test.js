@@ -6,4 +6,4 @@ require('phantomjs-polyfill');
 require('babel-core/lib/babel/polyfill');
 
 /* Test spec files */
-require('color-store-spec');
+require('my-first-store-spec');

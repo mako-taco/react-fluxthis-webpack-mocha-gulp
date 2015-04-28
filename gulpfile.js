@@ -1,12 +1,13 @@
 'use strict';
 
-var config = require('webpack.config');
+var config = require('./webpack.config');
 var gutil = require('gulp-util');
+var path = require('path');
 var gulp = require('gulp');
 var nodefn = require('when/node');
-var server = require('test/server');
+var server = require('./test/server');
 var webpack = require('webpack');
-var spawn = require('child_process').spawn;
+var execFile = require('child_process').execFile;
 var notifier = require('node-notifier');
 var startTestServer;
 var stopTestServer;
@@ -14,6 +15,7 @@ var webpackRun;
 var runTests;
 
 function notifyBuildFailed () {
+	gutil.log(gutil.colors.red('Build failed'));
 	notifier.notify({
 		title: 'Build failed',
 		message: 'see console for details',
@@ -23,6 +25,7 @@ function notifyBuildFailed () {
 }
 
 function notifyBuildPassed () {
+	gutil.log(gutil.colors.blue('Build complete'));
 	notifier.notify({
 		title: 'Build complete',
 		message: 'see console for details',
@@ -31,6 +34,7 @@ function notifyBuildPassed () {
 }
 
 function notifyTestsFailed (err) {
+	gutil.log(gutil.colors.red('Tests failed'));
 	var notification = {
 		title: 'Tests failed',
 		sound: true,
@@ -46,6 +50,7 @@ function notifyTestsFailed (err) {
 }
 
 function notifyTestsPassed () {
+	gutil.log(gutil.colors.blue('Tests passed'));
 	notifier.notify({
 		title: 'Tests passed',
 		message: 'see console for details',
@@ -54,6 +59,7 @@ function notifyTestsPassed () {
 }
 
 function notifyTestBuildFailed () {
+	gutil.log(gutil.colors.red('Test build failed'));
 	notifier.notify({
 		message: 'Test build failed',
 		sound: true,
@@ -64,42 +70,32 @@ function notifyTestBuildFailed () {
 process.env.NODE_PORT = process.env.NODE_PORT || 21113;
 
 runTests = nodefn.lift(function (callback) {
-	var errBuf = '';
 	var url = 'http://localhost:' + process.env.NODE_PORT + '/index.html';
-	var child;
-
+	var file = path.join('node_modules','.bin','mocha-phantomjs.cmd');
+	var args = ['-R', 'spec', url];
+	
+	gutil.log('Starting unit tests');
 	try {
-		gutil.log('Starting unit tests');
 
-		child = spawn('./node_modules/.bin/mocha-phantomjs', [
-			'-R', 
-			'spec',
-			url 
-		]);
-		
-		child.stdout.on('data', function (data) {
-			errBuf += data.toString();
-		});
-
-		child.stderr.on('data', function (data) {
-			errBuf += gutil.colors.red(data.toString());
-		});
-
-		child.on('exit', function (code) {
-			var err = null;
-			gutil.log(errBuf);
-			gutil.log(gutil.colors.blue('Mocha exited with code ' + code));
+		execFile(file, args, function (err, stdout, stderr) {
+			var code = (err && err.code) || 0; 
+			
+			gutil.log(stdout);
+			gutil.log(stderr);
+			gutil.log('Mocha exited with code ' + code);
 			
 			//non zero! bad!
 			if(code) {
 				err = new Error('Client tests failed');
 				err.url = url;
 			}
+
 			gutil.log('Unit tests finished');
 			callback(err);
 		});
 	}
 	catch (err) {
+		gutil.log('Fatal error', err.stack);
 		callback(err);
 	}
 });
