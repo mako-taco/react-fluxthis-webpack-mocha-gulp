@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "babel-core": "^5.0.8",
-    "fluxthis": "^1.3.0",
+    "fluxthis": "^2.1.0",
     "gulp-util": "^3.0.4",
     "jsx-loader": "^0.13.1",
     "node-notifier": "^4.1.2",
