@@ -31,7 +31,7 @@
     "express": "^4.12.3",
     "gulp": "^3.8.11",
     "mocha-phantomjs": "^3.5.3",
-    "phantomjs": "^1.9.16",
+    "phantomjs": "1.9.1 - 1.9.7-15",
     "phantomjs-polyfill": "0.0.1",
     "should": "^5.2.0",
     "source-map-support": "^0.2.10",
